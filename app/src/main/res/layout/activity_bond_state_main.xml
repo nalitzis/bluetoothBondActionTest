@@ -22,4 +22,18 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/bonded_address"
         android:text="---"/>
+    <TextView
+        android:id="@+id/pair_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_below="@id/bonded_address"
+        android:text="Pair-request?:"/>
+    <TextView
+        android:id="@+id/pair_request_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bonded_address"
+        android:layout_toRightOf="@id/pair_request"
+        android:text="---"/>
 </RelativeLayout>

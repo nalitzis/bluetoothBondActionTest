@@ -7,10 +7,13 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
+ * Listen for bond related events
  * Created by Ado on 11/03/16.
  */
 public class BondStateReceiver extends BroadcastReceiver {
     private static final String TAG = "BondStateReceiver";
+
+    private boolean mFromPairRequest = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -27,9 +30,20 @@ public class BondStateReceiver extends BroadcastReceiver {
                 //required to start an activity from a non-activity context
                 startActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity.putExtra(BondStateMainActivity.EXTRA_DEVICE_ADDRESS, extraAddress);
+                startActivity.putExtra(BondStateMainActivity.EXTRA_PAIR_REQUEST, mFromPairRequest);
                 applicationContext.startActivity(startActivity);
+            } else if(extraBondState == BluetoothDevice.BOND_NONE) {
+                Log.d(TAG, "no bond");
+            } else if(extraBondState == BluetoothDevice.BOND_BONDING) {
+                Log.d(TAG, "bonding in progress");
             }
-
+            else if(action.equals(BluetoothDevice.ACTION_PAIRING_REQUEST)) {
+                final BluetoothDevice extraDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                Log.d(TAG, "received ACTION_PAIRING_REQUEST from " +extraDevice.getAddress());
+                mFromPairRequest = true;
+                return;
+            }
+            mFromPairRequest = false;
         }
     }
 }
