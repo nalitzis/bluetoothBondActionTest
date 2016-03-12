@@ -37,13 +37,11 @@ public class BondStateReceiver extends BroadcastReceiver {
             } else if(extraBondState == BluetoothDevice.BOND_BONDING) {
                 Log.d(TAG, "bonding in progress");
             }
-            else if(action.equals(BluetoothDevice.ACTION_PAIRING_REQUEST)) {
-                final BluetoothDevice extraDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Log.d(TAG, "received ACTION_PAIRING_REQUEST from " +extraDevice.getAddress());
-                mFromPairRequest = true;
-                return;
-            }
             mFromPairRequest = false;
+        } else if(action.equals(BluetoothDevice.ACTION_PAIRING_REQUEST)) {
+            final BluetoothDevice extraDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            Log.d(TAG, "received ACTION_PAIRING_REQUEST from " +extraDevice.getAddress());
+            mFromPairRequest = true;
         }
     }
 }
